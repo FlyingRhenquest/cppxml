@@ -1,0 +1,46 @@
+Copyright 2013 Bruce Ide
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+ 
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+This is a simple and moderately cheesy wrapper for the expat SAX parser.
+The core engine very simply provides events from expat with standard
+C++ library objects instead of the C ones expat uses. The expat callbacks
+are wrapped in boost::signals2 objects. See the test directory for examples.
+
+The xml_node object provides a very simple very-much-not-DOM tree which
+can be traversed and queried. I might set up some tree manipulation later.
+
+The node engine is essentially a factory for xml_nodes. It will construct
+an entire node tree from an XML document. It also provides a
+boost::signals2 event which is signalled when a node becomes available.
+Child nodes will always become available before parent nodes do, since
+the parser has to go all the way down the tree and then come back up in order
+to build the tree.
+
+The best place to find examples is in the test directory. The source is
+only the three header files herein. I'm not sure you want to install them
+in /usr/include or /usr/local/include or anything. Maybe just check out
+the project and add an include path to it in your makefile or something.
+
+This library depends on expat, boost::signals2 and boost::bind.
+
+I don't claim that this library is useful for much of anything, and is
+mostly just a learning exercise for me. Note one of my goals is to use
+C++11 extensions when appropriate, so this may not compile happily
+if your compiler doesn't support those. I used gcc 4.7.2.
+
+Yes, I know there's a lot of pass by copy in here. That seems a bit safer
+than allocating stuff and passing it back. I suppose I could use
+shared_ptrs more, but I'm hoping the vector copies use that newfangled
+rvalue reference anyway. I'm not going to optimize for that until speed
+becomes a problem.

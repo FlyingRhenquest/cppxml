@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<foo xmlns:n="http://fake_domain/test">
+  <n:bar>Text from Bar
+     <n:baz bait = "quux"/>
+  </n:bar>
+</foo>
