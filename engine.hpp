@@ -125,14 +125,20 @@ namespace cppxml {
 
     void handle_namespace_start(const char *prefix, const char *uri)
     {
-      std::string uri_prefix(prefix);
+      std::string uri_prefix("");
+      if (nullptr != prefix) {
+	uri_prefix = prefix;
+      }
       std::string uri_uri(uri);
       namespace_start(uri_prefix, uri_uri);
     }
 
     void handle_namespace_end(const char *prefix)
     {
-      std::string uri_prefix(prefix);
+      std::string uri_prefix("");
+      if (nullptr != prefix) {
+	uri_prefix = prefix;
+      }
       namespace_end(uri_prefix);
     }
 

@@ -196,7 +196,7 @@ namespace cppxml {
     child_vector all_children()
     {
       return children;
-    }
+    }    
 
   };
 
