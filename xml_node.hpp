@@ -30,13 +30,25 @@ namespace cppxml {
 
   class xml_node; // pre-declare yadda
 
+  // Deprecating these two typedefs in favor of
+  // xml_node::pointer and xml_node::vector, which
+  // feel more precise
   typedef std::shared_ptr<xml_node> node_pointer;
   typedef std::vector<node_pointer> child_vector;
 
   class xml_node {
+  public:
+    typedef std::shared_ptr<xml_node> pointer;
+    typedef std::vector<pointer> vector;
+
   private:
 
     attribute_vector attributes;
+    // Namespaces are just key/value pairs too. We need to store all
+    // the namespaces and their URLs in the top level document, but the
+    // top level document is really just an xml_node, too. So I'll add
+    // the namespaces to that node as they pop up.
+    attribute_vector namespaces; 
     std::string name;
     std::string ns;
     std::string ns_uri;
@@ -48,7 +60,7 @@ namespace cppxml {
 
     void find_children(const std::string &name, child_vector &children)
     {
-      for(node_pointer child : this->children) {
+      for(pointer child : this->children) {
 	if (child->name == name) {
 	  children.push_back(child);
 	}
@@ -56,6 +68,28 @@ namespace cppxml {
 	  child->find_children(name, children);
 	}
       }
+    }
+
+    void append_all_attributes(std::string &val, const attribute_vector &att_vec, bool is_namespace = false)
+    {
+      for (const attribute_pair &att : att_vec) {
+	append_attributes(val, att.first, att.second, is_namespace);
+      }
+    }
+
+    void append_attributes(std::string &val, const std::string &key, const std::string &value, bool is_namespace = false)
+    {
+      val.append(" ");
+      if (is_namespace) {
+	val.append("xmlns");
+	if(key.length() > 0) {
+	  val.append(":");
+	}
+      }
+      val.append(key);
+      val.append("=\"");
+      val.append(value);
+      val.append("\"");
     }
 
   public:
@@ -70,8 +104,8 @@ namespace cppxml {
 
     xml_node(const xml_node &tocopy) : attributes(tocopy.attributes), name(tocopy.name), ns(tocopy.ns), ns_uri(tocopy.ns_uri), text(tocopy.text)
     {
-      for (node_pointer child : children) {
-	child.reset();
+      for (pointer child : tocopy.children) {
+	children.push_back(child);
       }
     }
 
@@ -79,7 +113,7 @@ namespace cppxml {
     {
     }
 
-    void add_child(const node_pointer &child)
+    void add_child(const pointer &child)
     {
       children.push_back(child);
     }
@@ -161,15 +195,15 @@ namespace cppxml {
      * found.
      */
 
-    node_pointer find_child(const std::string &name)
+    pointer find_child(const std::string &name)
     {
-      node_pointer retval;
-      for (node_pointer child : children) {
+      pointer retval;
+      for (pointer child : children) {
 	if (child->name == name) {
 	  retval = child;
 	  break;
 	}
-	node_pointer child_search = child->find_child(name);
+	pointer child_search = child->find_child(name);
 	if (child_search.get() != nullptr) {
 	  retval = child_search;
 	  break;
@@ -196,7 +230,59 @@ namespace cppxml {
     child_vector all_children()
     {
       return children;
-    }    
+    }
+
+    /**
+     * Add a namespace to this node. node_engine should only ever
+     * do this to document, whenever it sees a new namespace. This
+     * will be used with to_string()
+     */
+
+    void add_namespace(std::string space, std::string url)
+    {
+      namespaces.push_back(make_pair(space, url));
+    }
+
+    /**
+     * Convert this node and all its children to string and
+     * return the result.
+     */
+
+    std::string to_string(std::string indent_level = std::string(""), std::string indent = std::string("   "))
+    {
+      std::string retval(indent_level);
+      retval.append("<");
+
+      if (ns.length() > 0) {
+	retval.append(ns);
+	retval.append(":");
+      }
+      retval.append(name);
+
+      append_all_attributes(retval, namespaces, true);
+      append_all_attributes(retval, attributes);
+
+      if (children.size() > 0) {
+	retval.append(">\n");
+
+	for (xml_node::pointer child : children) {
+	  retval.append(child->to_string(indent_level + indent, indent));  
+	}
+	retval.append(indent_level);
+	retval.append("</");
+	if (ns.size() > 0) {
+	  retval.append(ns);
+	  retval.append(":");
+	}
+	retval.append(name);
+	retval.append(">\n");
+
+      } else {
+	retval.append("/>\n");
+
+      }
+      return retval;
+    }
 
   };
 
