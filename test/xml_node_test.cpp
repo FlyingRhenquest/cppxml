@@ -9,6 +9,7 @@ class xml_node_test : public CppUnit::TestFixture {
   CPPUNIT_TEST_SUITE(xml_node_test);
   CPPUNIT_TEST(test_basic_functionality);
   CPPUNIT_TEST(test_to_string);
+  CPPUNIT_TEST(test_set_text);
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -50,6 +51,14 @@ public:
     std::string tos = foo.to_string();
     std::string expected("<n:foo xmlns:n=\"http://fake_domain/fake_ns\">\n   <n:bar>\n      <n:baz/>\n   </n:bar>\n</n:foo>\n");
     CPPUNIT_ASSERT(tos == expected);
+  }
+
+  void test_set_text()
+  {
+    cppxml::xml_node foo("foo", "", "");
+    foo.set_text("bar");
+    std::string expected("<foo>bar</foo>\n");
+    CPPUNIT_ASSERT(expected == foo.to_string());
   }
   
 };

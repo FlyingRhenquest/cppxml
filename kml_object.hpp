@@ -35,9 +35,9 @@ namespace cppxml {
 
     xml_node::pointer to_xml() override
     {
-      xml_node::pointer retval = std::make_shared<xml_node>(Kml, "", KmlnsUrl);
+      xml_node::pointer retval = std::make_shared<xml_node>(Kml, Kmlns, KmlnsUrl);
       // Top level document node also needs it added to the list
-      retval->add_namespace("", KmlnsUrl); // Default namespace
+      retval->add_namespace(Kmlns, KmlnsUrl); // Default namespace
       add_xml_children(retval);
       return retval;
     }

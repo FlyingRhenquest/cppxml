@@ -262,13 +262,18 @@ namespace cppxml {
       append_all_attributes(retval, namespaces, true);
       append_all_attributes(retval, attributes);
 
-      if (children.size() > 0) {
-	retval.append(">\n");
-
-	for (xml_node::pointer child : children) {
-	  retval.append(child->to_string(indent_level + indent, indent));  
+      if (children.size() > 0 || text.length() > 0) {
+	retval.append(">");
+	if (text.length() > 0) {
+	  retval.append(text);
 	}
-	retval.append(indent_level);
+	if (children.size() > 0) {
+	  retval.append("\n");
+	  for (xml_node::pointer child : children) {
+	    retval.append(child->to_string(indent_level + indent, indent));  
+	  }
+	  retval.append(indent_level);
+	}
 	retval.append("</");
 	if (ns.size() > 0) {
 	  retval.append(ns);

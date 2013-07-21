@@ -26,11 +26,12 @@ namespace cppxml {
     const std::string Name = "name";
     const std::string Description = "description";
     const std::string Kml = "kml";
+    const std::string Kmlns = ""; // default namespace
     const std::string KmlnsUrl = "http://www.opengis.net/kml/2.2";
 
     xml_node::pointer get_node(const std::string &node_name, const std::string &node_text)
     {
-      xml_node::pointer retval = std::make_shared<xml_node>(node_name, "", KmlnsUrl);
+      xml_node::pointer retval = std::make_shared<xml_node>(node_name, Kmlns, KmlnsUrl);
       retval->set_text(node_text);
       return retval;
     }
