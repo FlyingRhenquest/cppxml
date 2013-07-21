@@ -1,4 +1,5 @@
-objs = run_cppunit.o kml_point_test.o kml_coordinates_test.o kml_document_test.o kml_object_test.o engine_test.o xml_node_test.o node_engine_test.o
+
+objs = run_cppunit.o kml_folder_test.o kml_point_test.o kml_coordinates_test.o kml_document_test.o kml_object_test.o engine_test.o xml_node_test.o node_engine_test.o
 # Rebuild objects if any of these change
 obj_deps = engine.hpp
 TIME_HOME = ${HOME}/sandbox/time

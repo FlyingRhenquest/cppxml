@@ -10,6 +10,8 @@
 
 #include "kml_base.hpp"
 #include <memory>
+#include <string>
+#include "xml_node.hpp"
 
 namespace cppxml {
 
