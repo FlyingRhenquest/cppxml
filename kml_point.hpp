@@ -20,8 +20,6 @@ namespace cppxml {
   public:
     typedef std::shared_ptr<kml_point> pointer;
  
-    enum altitude_mode {clampToGround, relativeToGround, absolute};
-
     const std::string Absolute = "absolute";
     const std::string AltitudeMode= "altitudeMode";
     const std::string ClampToGround = "clampToGround";

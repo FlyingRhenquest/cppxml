@@ -65,11 +65,11 @@ namespace cppxml {
 	for (const fr::coordinates::lat_long &point : all_latlongs) {
 	  coordinate_string.append("\n");
 	  // KML coordinates are in long/lat.
-	  coordinate_string.append(fr::time::to_string(point.get_long()));
+	  coordinate_string.append(fr::time::to_string<double>()(point.get_long()));
 	  coordinate_string.append(",");
-	  coordinate_string.append(fr::time::to_string(point.get_lat()));
+	  coordinate_string.append(fr::time::to_string<double>()(point.get_lat()));
 	  coordinate_string.append(",");
-	  coordinate_string.append(fr::time::to_string(point.get_alt()));
+	  coordinate_string.append(fr::time::to_string<double>()(point.get_alt()));
 	}
 	coordinate_string.append("\n");
       }

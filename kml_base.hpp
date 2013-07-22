@@ -13,6 +13,8 @@
 
 namespace cppxml {
 
+  enum altitude_mode {clampToGround, relativeToGround, absolute};
+
   class kml_base {
   public:
     typedef std::shared_ptr<kml_base> pointer;
