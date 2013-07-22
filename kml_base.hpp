@@ -25,11 +25,32 @@ namespace cppxml {
     vector children;
 
     // This is a good place for common tag names too
-    const std::string Name = "name";
+    const std::string Absolute = "absolute";
+    const std::string AltitudeMode= "altitudeMode";
+    const std::string ClampToGround = "clampToGround";
     const std::string Description = "description";
+    const std::string Extrude = "extrude";
+    const std::string Id = "id";
     const std::string Kml = "kml";
     const std::string Kmlns = ""; // default namespace
     const std::string KmlnsUrl = "http://www.opengis.net/kml/2.2";
+    const std::string Name = "name";
+    const std::string RelativeToGround = "relativeToGround";
+
+    void add_altitude_mode(xml_node::pointer to_this, altitude_mode alt_mode)
+    {
+      switch(alt_mode) {
+      case absolute:
+	to_this->set_attribute(AltitudeMode, Absolute);
+	break;
+      case clampToGround:
+	to_this->set_attribute(AltitudeMode, ClampToGround);
+	break;
+      case relativeToGround:
+	to_this->set_attribute(AltitudeMode, RelativeToGround);
+	break;
+      }
+    }
 
     xml_node::pointer get_node(const std::string &node_name, const std::string &node_text)
     {

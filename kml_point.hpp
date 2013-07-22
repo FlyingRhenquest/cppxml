@@ -20,13 +20,7 @@ namespace cppxml {
   public:
     typedef std::shared_ptr<kml_point> pointer;
  
-    const std::string Absolute = "absolute";
-    const std::string AltitudeMode= "altitudeMode";
-    const std::string ClampToGround = "clampToGround";
-    const std::string Extrude = "extrude";
-    const std::string Id = "id";
     const std::string Point = "Point";
-    const std::string RelativeToGround = "relativeToGround";
 
   private:
 
@@ -34,21 +28,6 @@ namespace cppxml {
     fr::coordinates::lat_long point;
     bool extrude;
     altitude_mode alt_mode;
-
-    void add_altitude_mode(xml_node::pointer to_this)
-    {
-      switch(alt_mode) {
-      case absolute:
-	to_this->set_attribute(AltitudeMode, Absolute);
-	break;
-      case clampToGround:
-	to_this->set_attribute(AltitudeMode, ClampToGround);
-	break;
-      case relativeToGround:
-	to_this->set_attribute(AltitudeMode, RelativeToGround);
-	break;
-      }
-    }
 
   public:
     kml_point(std::string id = "", bool extrude = false, altitude_mode alt_mode = clampToGround) : id(id), extrude(extrude), alt_mode(alt_mode)
@@ -73,7 +52,7 @@ namespace cppxml {
       if (id.length() > 0) {
 	retval->set_attribute(Id, id);
       }
-      add_altitude_mode(retval);
+      add_altitude_mode(retval, alt_mode);
       retval->set_attribute(Extrude, extrude ? std::string("1") : std::string("0"));
       kml_coordinates coords;
       coords.add(point);
