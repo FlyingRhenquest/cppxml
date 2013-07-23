@@ -41,13 +41,14 @@ namespace cppxml {
     {
       switch(alt_mode) {
       case absolute:
-	to_this->set_attribute(AltitudeMode, Absolute);
+	
+	to_this->add_child(get_node(AltitudeMode, Absolute));
 	break;
       case clampToGround:
-	to_this->set_attribute(AltitudeMode, ClampToGround);
+	to_this->add_child(get_node(AltitudeMode, ClampToGround));
 	break;
       case relativeToGround:
-	to_this->set_attribute(AltitudeMode, RelativeToGround);
+	to_this->add_child(get_node(AltitudeMode, RelativeToGround));
 	break;
       }
     }

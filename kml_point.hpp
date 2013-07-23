@@ -53,7 +53,7 @@ namespace cppxml {
 	retval->set_attribute(Id, id);
       }
       add_altitude_mode(retval, alt_mode);
-      retval->set_attribute(Extrude, extrude ? std::string("1") : std::string("0"));
+      retval->add_child(get_node(Extrude, extrude ? std::string("1") : std::string("0")));
       kml_coordinates coords;
       coords.add(point);
       retval->add_child(coords.to_xml());
