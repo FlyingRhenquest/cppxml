@@ -19,7 +19,7 @@ public:
   void basic_test()
   {
     fr::coordinates::lat_long ll(1,2,3);
-    cppxml::kml_coordinates::pointer testval = std::make_shared<cppxml::kml_coordinates>();
+    cppxml::kml_coordinates::pointer testval = std::make_shared<cppxml::kml_coordinates>(0);
     testval->add(ll);
     std::string returned = testval->to_xml()->to_string();
     std::string expected("<coordinates>\n2,1,3\n</coordinates>\n");

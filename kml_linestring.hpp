@@ -28,16 +28,17 @@ namespace cppxml {
     bool tessellate;
     bool extrude;
     altitude_mode alt_mode;
+    int precision;
     kml_coordinates::pointer coordinates;
 
   public:
     
 
-    kml_linestring(altitude_mode alt_mode = relativeToGround, bool extrude = true, bool tessellate = false) : super(), tessellate(tessellate), extrude(extrude), alt_mode(alt_mode), coordinates(std::make_shared<kml_coordinates>())
+    kml_linestring(altitude_mode alt_mode = relativeToGround, bool extrude = true, bool tessellate = false, int precision = 0) : super(), tessellate(tessellate), extrude(extrude), alt_mode(alt_mode), precision(precision), coordinates(std::make_shared<kml_coordinates>(precision))
     {
     }
 
-    kml_linestring(const kml_linestring &copy) : super(copy), tessellate(copy.tessellate), extrude(copy.extrude), alt_mode(copy.alt_mode), coordinates(copy.coordinates)
+    kml_linestring(const kml_linestring &copy) : super(copy), tessellate(copy.tessellate), extrude(copy.extrude), alt_mode(copy.alt_mode), precision(copy.precision), coordinates(copy.coordinates)
     {
     }
 

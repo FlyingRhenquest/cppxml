@@ -23,7 +23,7 @@ public:
     point->set_point(ll);
     std::string point_string = point->to_xml()->to_string();
     std::string expected("<Point>\n   <altitudeMode>clampToGround</altitudeMode>\n   <extrude>1</extrude>\n   <coordinates>\n2,1,3\n</coordinates>\n</Point>\n");
-    CPPUNIT_ASSERT(point_string == expected);
+     CPPUNIT_ASSERT(point_string == expected);
   }
 
 };

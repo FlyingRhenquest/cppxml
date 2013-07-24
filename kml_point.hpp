@@ -28,13 +28,14 @@ namespace cppxml {
     fr::coordinates::lat_long point;
     bool extrude;
     altitude_mode alt_mode;
+    int precision;
 
   public:
-    kml_point(std::string id = "", bool extrude = false, altitude_mode alt_mode = clampToGround) : id(id), extrude(extrude), alt_mode(alt_mode)
+    kml_point(std::string id = "", bool extrude = false, altitude_mode alt_mode = clampToGround, int precision = 0) : id(id), extrude(extrude), alt_mode(alt_mode), precision(precision)
     {
     }
 
-    kml_point(const kml_point &copy) : id(copy.id), point(copy.point), extrude(copy.extrude), alt_mode(copy.alt_mode)
+    kml_point(const kml_point &copy) : id(copy.id), point(copy.point), extrude(copy.extrude), alt_mode(copy.alt_mode), precision(copy.precision)
     {
     }
 
@@ -54,7 +55,7 @@ namespace cppxml {
       }
       add_altitude_mode(retval, alt_mode);
       retval->add_child(get_node(Extrude, extrude ? std::string("1") : std::string("0")));
-      kml_coordinates coords;
+      kml_coordinates coords(precision);
       coords.add(point);
       retval->add_child(coords.to_xml());
       return retval;

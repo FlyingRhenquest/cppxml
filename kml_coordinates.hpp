@@ -25,12 +25,13 @@ namespace cppxml {
   private:
     const std::string Coordinates = "coordinates";
     latlong_vector all_latlongs;
+    int precision;
   public:
-    kml_coordinates() : kml_base()
+    kml_coordinates(int precision = 9) : kml_base(), precision(precision)
     {
     }
 
-    kml_coordinates(const kml_coordinates &copy) : all_latlongs(copy.all_latlongs)
+    kml_coordinates(const kml_coordinates &copy) : all_latlongs(copy.all_latlongs), precision(copy.precision)
     {
     }
 
@@ -65,11 +66,11 @@ namespace cppxml {
 	for (const fr::coordinates::lat_long &point : all_latlongs) {
 	  coordinate_string.append("\n");
 	  // KML coordinates are in long/lat.
-	  coordinate_string.append(fr::time::to_string<double>()(point.get_long()));
+	  coordinate_string.append(fr::time::to_string<double>(precision)(point.get_long()));
 	  coordinate_string.append(",");
-	  coordinate_string.append(fr::time::to_string<double>()(point.get_lat()));
+	  coordinate_string.append(fr::time::to_string<double>(precision)(point.get_lat()));
 	  coordinate_string.append(",");
-	  coordinate_string.append(fr::time::to_string<double>()(point.get_alt()));
+	  coordinate_string.append(fr::time::to_string<double>(precision)(point.get_alt()));
 	}
 	coordinate_string.append("\n");
       }
