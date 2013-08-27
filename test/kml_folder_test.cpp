@@ -22,9 +22,11 @@ public:
     fr::coordinates::lat_long ll(1,2,3);
     point->set_point(ll);
     test_folder->add_child(point);
-    std::string expected("<Folder>\n   <name>Test Folder</name>\n   <description>A basic test folder</description>\n   <Point>\n      <altitudeMode>clampToGround</altitudeMode>\n      <extrude>1</extrude>\n      <coordinates>\n2,1,3\n</coordinates>\n   </Point>\n</Folder>\n");
+    std::string expected("<Folder>\n   <visibility>1</visibility>\n   <open>0</open>\n   <name>Test Folder</name>\n   <description>A basic test folder</description>\n   <Point>\n      <altitudeMode>clampToGround</altitudeMode>\n      <extrude>1</extrude>\n      <coordinates>\n2,1,3\n</coordinates>\n   </Point>\n</Folder>\n");
+
 
     std::string actual = test_folder->to_xml()->to_string();
+
 
     CPPUNIT_ASSERT(expected == actual);
   }
