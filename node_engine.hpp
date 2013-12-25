@@ -28,6 +28,7 @@
 
 #include <boost/bind.hpp>
 #include <string>
+#include <sstream>
 #include <memory>
 #include <vector>
 #include "xml_node.hpp"

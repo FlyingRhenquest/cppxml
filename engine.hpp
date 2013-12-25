@@ -24,6 +24,7 @@
 #include <expat.h>
 #include <fstream>
 #include <iostream>
+#include <sstream>
 #include <utility>
 
 namespace cppxml {
